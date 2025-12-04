@@ -1,0 +1,90 @@
+name: Azure Static Web Apps CI/CD
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+    branches:
+      - main
+
+jobs:
+  build_and_deploy_job:
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
+    runs-on: ubuntu-latest
+    name: Build and Deploy Job
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+          lfs: false
+      - name: Build And Deploy
+        id: builddeploy
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          action: "upload"
+          app_location: "/frontend"
+          api_location: "/backend"
+          output_location: ""
+
+  close_pull_request_job:
+    if: github.event_name == 'pull_request' && github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    name: Close Pull Request Job
+    steps:
+      - name: Close Pull Request
+        id: closepullrequest
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+          action: "close"
+```
+
+5. **Scroll down**
+6. **In "Commit message"** type: `Add Azure deployment workflow`
+7. **Click:** "Commit changes" (green button)
+
+---
+
+## **STEP 2: ADD DEPLOYMENT TOKEN TO GITHUB** (3 min)
+
+### **Get Your Deployment Token**
+
+**You already have it!** It's:
+```
+f7d178b80b9719922b0c7a7244b49093ba2dcb5219431bb6540a21fe5eece81e03-f5fd63bf-c3ee-448d-aba5-0ea9c72c30db00f260009d99d80f
+```
+
+### **Add It as GitHub Secret**
+
+1. **In your GitHub repository**, click **"Settings"** (top menu bar)
+2. **In left menu**, look for **"Secrets and variables"**
+3. **Click:** "Secrets and variables" → **"Actions"**
+4. **Click:** "New repository secret" (green button)
+5. **Fill in:**
+   - **Name:** `AZURE_STATIC_WEB_APPS_API_TOKEN`
+   - **Secret:** Paste your token:
+```
+     f7d178b80b9719922b0c7a7244b49093ba2dcb5219431bb6540a21fe5eece81e03-f5fd63bf-c3ee-448d-aba5-0ea9c72c30db00f260009d99d80f
+```
+6. **Click:** "Add secret"
+
+---
+
+## **STEP 3: TRIGGER DEPLOYMENT** (2 min)
+
+Now let's trigger the deployment!
+
+### **Make a Small Change**
+
+1. **Go back** to your repository main page (click "Code" tab)
+2. **Click** on `README.md`
+3. **Click** the pencil icon (Edit this file)
+4. **Add a line** at the top:
+```
+   # Suave Sales Analytics Assistant
+   
+   AI-powered sales analytics chatbot for instant insights.
