@@ -1,0 +1,15 @@
+{
+  "name": "suave-sales-analytics-api",
+  "version": "1.0.0",
+  "description": "Azure Function API for Suave Sales Analytics Agent",
+  "scripts": {
+    "start": "func start",
+    "test": "echo \"No tests yet...\""
+  },
+  "dependencies": {
+    "@azure/identity": "^4.0.0"
+  },
+  "devDependencies": {
+    "@azure/functions": "^4.0.0"
+  }
+}
