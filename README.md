@@ -291,3 +291,6 @@ Questions? Issues? Check:
 **Built with:** Azure Static Web Apps + Azure Functions + Azure AI Foundry  
 **Version:** 1.0  
 **Date:** December 2025
+## Features
+   - Natural language queries
+   - Real-time sales data
